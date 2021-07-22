@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Animaciones will-change</title>
+    <link href="https://fonts.googleapis.com/css2?family=Francois+One&display=swap" rel="stylesheet">
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Francois One', sans-serif;
+            background: #222
+        }
+        .container{
+            border: 4px solid #406;
+            background: #305;
+            box-shadow: 0px 5px 20px 20px rgba(0,0,0, 0.6);
+            border-radius: 49%;
+            width: 80%;
+        }
+        .container:hover .cuadrado{
+            
+        }
+        
+        .cuadrado{
+            width: 300px;
+            height: 100px;
+            background: #111;
+            
+            margin: 50px 5px;
+            position: relative;
+             border: 3px solid #432;
+/*            transition: .3s;*/
+            border-radius: 200px;
+            box-shadow: 50px 3px 4px -15px rgba(0,0,0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation-name: cuadrado, carve;
+            animation-duration: 3s, 1.2s;
+            animation-direction: alternate;
+            animation-iteration-count: 2, infinite;
+            animation-timing-function: cubic-bezier(.53,.34,.41,.53), ease-in-out;
+            will-change: box-shadow, width, height, transform;
+        }
+        
+        @keyframes cuadrado{
+            0%{
+               left: 0px;
+               box-shadow: 30px -10px 4px -1 px rgba(0,0,0, 0.6);
+            }
+            25%{
+                 box-shadow: 10px -2px 6px 0px rgba(0,0,0, 0.7);
+            }
+            
+            50%{
+                width: 150px;
+                  box-shadow: 0px -5px 8px 0px rgba(0,0,0, 0.8);
+               
+                height: 50px;
+            }
+           
+            75%{
+                 box-shadow: -10px -2px 6px 0px rgba(0,0,0, 0.7);
+            }
+            
+            100%{
+                left: calc(100% - 260px);
+                 box-shadow: -30px -5px 4px -1px rgba(0,0,0, 0.6);
+               
+                
+            }
+        }
+        @keyframes carve{
+           from{
+               transform: translateY(5px)
+        }
+            to{
+                transform: translateY(-5px)
+            }
+            
+        }
+        @keyframes flip{
+             left:40px;
+            0%{
+               
+                transform: rotateX(0deg);
+                    box-shadow: 30px -10px 4px -1 px rgba(0,0,0, 0.6);
+            }
+            25%{
+                background: #111;
+            }
+            50%{
+                background: #695539;
+            }
+             75%{
+                background: #111;
+            }
+            100%{
+                transform: rotateX(360deg);
+            }
+        }
+     
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="cuadrado" id="cuadrado">
+        <h2></h2>
+    </div>
+    </div>
+    <script>
+    const $cuadrado = document.getElementById('cuadrado');
+        $cuadrado.addEventListener('animationend', (event) => {
+            console.log(event.animationName);
+            if(event.animationName === 'cuadrado'){
+                $cuadrado.style.animationName = 'flip';
+                $cuadrado.style.animationDuration = '.6s';
+                $cuadrado.style.animationIterationCount = '1';
+            }
+            if(event.animationName === 'flip'){
+                $cuadrado.style.animationName = 'cuadrado';
+                $cuadrado.style.animationDuration = '3s';
+                $cuadrado.style.animationIterationCount = '2';
+            }
+            
+        })
+    </script>
+</body>
+</html>
